@@ -4,9 +4,8 @@ const bookingSchema = new mongoose.Schema({
     movieId: String,
     movieName: String,
     theatre: String,
-    movieName: String,
     time : String,
-    seats: String,
+    seats: [String],
     total:Number
 })
 module.exports = mongoose.model("booking",bookingSchema);

@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
- const Movie = require("../models/Bookings");
-const Bookings = require("../models/Bookings");
+const Booking = require("../models/Bookings");
  //get api for booked seats
 
  router.get("/",async (req,res) => {
    const {movieId, theatre,date,time}= req.query;
    try{
-    const bookings = await Bookings.find({
+    const bookings = await Booking.find({
         movieId,
         theatre,
         date,
@@ -20,27 +19,28 @@ const Bookings = require("../models/Bookings");
     res.json(bookedSeats);
    }
    catch(err){
-    res.status(500).json
-    message:err.message
+    res.status(500).json({
+        message:err.message
+    });
    }
  });
 
 // post the bookings
 
-router.get("/", async(req,res)=>{
+router.post("/", async(req,res)=>{
     try{
         const booking = new Booking(req.body);
         await booking.save();
         res.json({
             success:true,
             message:"booking successful",
-            booking 
         });
     }
-    catch(error){
+    catch(err){
+        console.error(err);
         res.status(500).json({
             success:false,
-            message:err.message
+            message:err.message,
     
         });
         
